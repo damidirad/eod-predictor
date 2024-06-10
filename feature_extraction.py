@@ -40,5 +40,4 @@ for log in logs_info:
             "duration": parse_time_string(duration),}
         durations.append(result)
 
-
-
+print(durations)
