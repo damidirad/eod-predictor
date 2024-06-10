@@ -1,7 +1,7 @@
 import json
 import datetime
 import re
-import matplotlib as plt
+import matplotlib.pyplot as plt
 
 logs = open("data/eod_logs_job_only_cleaned_up.json")
 logs_info = []
@@ -30,6 +30,7 @@ def parse_time_string(time_str):
 
     return datetime.timedelta(hours=hours, minutes=minutes, seconds=seconds)
 
+new_patt = r"INFO.*?\[([^]]+)] .*?total number of batches is (\d+), and total number of accounts is (\d+)"
 for log in logs_info:
     match = re.search(pattern, log['line'])
     if match:
@@ -39,3 +40,14 @@ for log in logs_info:
             "name": name,
             "duration": parse_time_string(duration),}
         durations.append(result)
+    new_match = re.search(new_patt, log['line'])
+    if new_match:
+        print(new_match.group(1))    
+
+# plt.figure(figsize=(16,9))
+# plt.title("Duration of EOD processing per EOD job")
+# plt.xlabel("Job name")
+# plt.ylabel("EOD processing time in seconds [s]")
+# plt.bar([duration['name'][:9] for duration in durations], [durations[i]['duration'].total_seconds() for i in range(len(durations))])
+# plt.xticks(rotation=45, fontsize=6)
+# plt.show()
