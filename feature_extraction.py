@@ -23,5 +23,3 @@ for log in logs_info:
             "name": name,
             "duration": duration,}
         durations.append(result)
-
-print(durations)
