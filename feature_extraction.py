@@ -8,6 +8,7 @@ logs_info = []
 timestamps = []
 date_format = "%Y-%m-%dT%H:%M:%S.%f%z"
 
+# load logs as dictionaries and parse datetime
 for log in logs:
     log_dict = json.loads(log)
     logs_info.append(log_dict)
@@ -16,6 +17,7 @@ for log in logs:
 durations = []
 pattern = r'name=(.*?),.*?duration=PT(.*?),'
 
+# parse time strings for duration of jobs to create datetime object
 def parse_time_string(time_str):
     time_pattern = re.compile(
         r'(?:(?P<hours>\d+)H)?(?:(?P<minutes>\d+)M)?(?P<seconds>\d+(?:\.\d+)?)?S'
@@ -30,7 +32,7 @@ def parse_time_string(time_str):
 
     return datetime.timedelta(hours=hours, minutes=minutes, seconds=seconds)
 
-new_patt = r"INFO.*?\[([^]]+)] .*?total number of batches is (\d+), and total number of accounts is (\d+)"
+# create list of job names and durations of jobs
 for log in logs_info:
     match = re.search(pattern, log['line'])
     if match:
@@ -40,9 +42,6 @@ for log in logs_info:
             "name": name,
             "duration": parse_time_string(duration),}
         durations.append(result)
-    new_match = re.search(new_patt, log['line'])
-    if new_match:
-        print(new_match.group(1))    
 
 # plt.figure(figsize=(16,9))
 # plt.title("Duration of EOD processing per EOD job")
