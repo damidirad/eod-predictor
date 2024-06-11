@@ -105,7 +105,7 @@ def add_labels(bars, ax, scale=1):
                     textcoords="offset points",
                     ha='center', va='bottom')
 for i, (x_pos, num_accounts) in enumerate(zip(x, account_numbers)):
-    ax1.annotate(f'Accounts: {num_accounts}', 
+    ax1.annotate(f'Accounts: {["6.05 million", "2.37 million"][i]}', 
                  xy=(x_pos, max(processing_times[i], avg_pt[i] * 1000)), 
                  xytext=(0, 10),
                  textcoords="offset points",
