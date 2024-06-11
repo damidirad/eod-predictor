@@ -2,6 +2,7 @@ import json
 import datetime
 import re
 import matplotlib.pyplot as plt
+import numpy as np
 
 logs = open("data/eod_logs_job_only_cleaned_up.json")
 logs_info = []
@@ -44,21 +45,21 @@ for log in logs_info:
         durations.append(result)
 
 # Create figure with all job durations
-fig, ax = plt.subplots()
-for i in range(len(durations)):
-    y = durations[i]['duration'].total_seconds()
-    b = ax.bar(durations[i]['name'], y)
-plt.title("Duration of EOD processing per EOD job")
-fig.set_figheight(9)
-fig.set_figwidth(12)
-ax.set_yscale('log')
-ax.tick_params(labelrotation=12, labelsize=6)
-ax.set_xlabel('Job name')
-ax.set_ylabel('EOD processing time in seconds [s]')
-plt.show()
+# fig, ax = plt.subplots()
+# for i in range(len(durations)):
+#     y = durations[i]['duration'].total_seconds()
+#     b = ax.bar(durations[i]['name'], y)
+# plt.title("Duration of EOD processing per EOD job")
+# fig.set_figheight(9)
+# fig.set_figwidth(12)
+# ax.set_yscale('log')
+# ax.tick_params(labelrotation=12, labelsize=6)
+# ax.set_xlabel('Job name')
+# ax.set_ylabel('EOD processing time in seconds [s]')
+# plt.show()
 
-loan_accounts = 0
-deposit_accounts = 0
+loan_accounts = 2371124
+deposit_accounts = 6056048
 
 # Filter the specific durations
 filtered_durations = [
@@ -70,19 +71,52 @@ filtered_durations = [
 job_names = [duration['name'] for duration in filtered_durations]
 processing_times = [duration['duration'].total_seconds() for duration in filtered_durations]
 account_numbers = [loan_accounts if 'LOANS' in name else deposit_accounts for name in job_names]
+avg_pt = [pt / na * 1000 for pt, na in zip(processing_times, account_numbers)]
 
 # Create figure 1
 fig, ax1 = plt.subplots(figsize=(16, 9))
+width_x = 0.35
+x = np.arange(len(job_names))  # X-axis positions for the groups
 
+# Plotting the processing times
 color = 'tab:blue'
 ax1.set_xlabel('Job name')
 ax1.set_ylabel('EOD processing time in seconds [s]', color=color)
-ax1.bar(job_names, processing_times, color=color, alpha=0.6)
+bars1 = ax1.bar(x - width_x/2, processing_times, width_x, label='Processing Time', color=color)
 ax1.tick_params(axis='y', labelcolor=color)
 
+# Creating the second y-axis for average processing time per account
 ax2 = ax1.twinx()
-color = 'tab:red'
-ax2.set_ylabel('Number of Accounts', color=color)
-ax2.plot(job_names, account_numbers, color=color, marker='o', ms='10', linestyle='none')
+color = 'tab:orange'
+ax2.set_ylabel('Average processing time per account [ms]', color=color)
+bars2 = ax2.bar(x + width_x/2, avg_pt, width_x, label='Avg Time/Account', color=color)
 ax2.tick_params(axis='y', labelcolor=color)
+
+# Adding legends
+fig.legend(loc='upper left', bbox_to_anchor=(0.1, 0.9))
+
+# Adding values on top of the bars
+def add_labels(bars, ax, scale=1):
+    for bar in bars:
+        height = bar.get_height()
+        ax.annotate(f'{height:.2f}' if scale == 1 else f'{height/scale:.4f}',
+                    xy=(bar.get_x() + bar.get_width() / 2, height),
+                    xytext=(0, 3),
+                    textcoords="offset points",
+                    ha='center', va='bottom')
+for i, (x_pos, num_accounts) in enumerate(zip(x, account_numbers)):
+    ax1.annotate(f'Accounts: {num_accounts}', 
+                 xy=(x_pos, max(processing_times[i], avg_pt[i] * 1000)), 
+                 xytext=(0, 10),
+                 textcoords="offset points",
+                 ha='center', 
+                 va='bottom', 
+                 fontsize=10, 
+                 color='black', 
+                 weight='bold')
+
+add_labels(bars1, ax1)
+add_labels(bars2, ax2, scale=1)
+
+fig.tight_layout()
 plt.show()
