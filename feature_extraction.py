@@ -117,6 +117,7 @@ for i, (x_pos, num_accounts) in enumerate(zip(x, account_numbers)):
 
 add_labels(bars1, ax1)
 add_labels(bars2, ax2, scale=1)
-
+ax1.set_xticks(x)
+ax1.set_xticklabels(job_names)
 fig.tight_layout()
 plt.show()
