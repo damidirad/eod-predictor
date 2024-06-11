@@ -43,7 +43,6 @@ for log in logs_info:
             "duration": parse_time_string(duration),}
         durations.append(result)
 
-print(durations)
 fig, ax = plt.subplots()
 for i in range(len(durations)):
     y = durations[i]['duration'].total_seconds()
@@ -54,8 +53,8 @@ fig.set_figwidth(12)
 ax.set_yscale('log')
 ax.set_xlabel('Job name')
 ax.set_ylabel('EOD processing time in seconds [s]')
-
 plt.show()
+
 loan_accounts = 0
 deposit_accounts = 0
 
