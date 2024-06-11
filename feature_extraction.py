@@ -43,10 +43,44 @@ for log in logs_info:
             "duration": parse_time_string(duration),}
         durations.append(result)
 
-# plt.figure(figsize=(16,9))
-# plt.title("Duration of EOD processing per EOD job")
-# plt.xlabel("Job name")
-# plt.ylabel("EOD processing time in seconds [s]")
-# plt.bar([duration['name'][:9] for duration in durations], [durations[i]['duration'].total_seconds() for i in range(len(durations))])
-# plt.xticks(rotation=45, fontsize=6)
-# plt.show()
+loan_accounts = 000
+deposit_accounts = 000
+
+# Filter the specific durations
+filtered_durations = [
+    duration for duration in durations 
+    if duration['name'] in ['LOANS_JOB_RUN_ON_BACKGROUND_WORKER', 'DEPOSITS_JOB_RUN_ON_WORKERS']
+]
+
+# Convert durations to seconds
+job_names = [duration['name'] for duration in filtered_durations]
+processing_times = [duration['duration'].total_seconds() for duration in filtered_durations]
+account_numbers = [loan_accounts if 'LOANS' in name else deposit_accounts for name in job_names]
+
+# Create figure 1
+fig, ax1 = plt.subplots(figsize=(16, 9))
+
+color = 'tab:blue'
+ax1.set_xlabel('Job name')
+ax1.set_ylabel('EOD processing time in seconds [s]', color=color)
+ax1.bar(job_names, processing_times, color=color, alpha=0.6)
+ax1.tick_params(axis='y', labelcolor=color)
+
+ax2 = ax1.twinx()
+color = 'tab:red'
+ax2.set_ylabel('Number of Accounts', color=color)
+ax2.plot(job_names, account_numbers, color=color, marker='o', ms='10', linestyle='none')
+ax2.tick_params(axis='y', labelcolor=color)
+
+# Create figure 2
+plt.title("Correlation between EOD Processing Time and Number of Accounts for Specific Jobs")
+plt.xticks(rotation=45, fontsize=10)
+plt.show()
+
+plt.figure(figsize=(16,9), num=2)
+plt.title("Duration of EOD processing per EOD job")
+plt.xlabel("Job name")
+plt.ylabel("EOD processing time in seconds [s]")
+plt.bar([duration['name'][:9] for duration in durations], [durations[i]['duration'].total_seconds() for i in range(len(durations))])
+plt.xticks(rotation=45, fontsize=6)
+plt.show() 
