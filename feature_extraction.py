@@ -43,14 +43,16 @@ for log in logs_info:
             "duration": parse_time_string(duration),}
         durations.append(result)
 
+# Create figure with all job durations
 fig, ax = plt.subplots()
 for i in range(len(durations)):
     y = durations[i]['duration'].total_seconds()
-    b = ax.bar(durations[i]['name'][:9], y)
+    b = ax.bar(durations[i]['name'], y)
 plt.title("Duration of EOD processing per EOD job")
-fig.set_figheight(6)
+fig.set_figheight(9)
 fig.set_figwidth(12)
 ax.set_yscale('log')
+ax.tick_params(labelrotation=12, labelsize=6)
 ax.set_xlabel('Job name')
 ax.set_ylabel('EOD processing time in seconds [s]')
 plt.show()
