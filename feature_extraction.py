@@ -33,9 +33,12 @@ def parse_time_string(time_str):
 
     return datetime.timedelta(hours=hours, minutes=minutes, seconds=seconds)
 
+timestamp_pattern = r'seconds","timestamp":"(\d+-\d+-\d+T\d+:\d+:\d+\.\d+\+\d+\d+:\d+)'
+
 # create list of job names and durations of jobs
 for log in logs_info:
     match = re.search(pattern, log['line'])
+    
     if match:
         name = match.group(1)
         duration = match.group(2)
@@ -44,19 +47,22 @@ for log in logs_info:
             "duration": parse_time_string(duration),}
         durations.append(result)
 
+
+
 # Create figure with all job durations
-# fig, ax = plt.subplots()
-# for i in range(len(durations)):
-#     y = durations[i]['duration'].total_seconds()
-#     b = ax.bar(durations[i]['name'], y)
-# plt.title("Duration of EOD processing per EOD job")
-# fig.set_figheight(9)
-# fig.set_figwidth(12)
-# ax.set_yscale('log')
-# ax.tick_params(labelrotation=12, labelsize=6)
-# ax.set_xlabel('Job name')
-# ax.set_ylabel('EOD processing time in seconds [s]')
-# plt.show()
+fig, ax = plt.subplots()
+for i in range(len(durations)):
+    y = durations[i]['duration'].total_seconds()
+    b = ax.bar(durations[i]['name'], y)
+plt.title("Duration of EOD processing per EOD job")
+fig.set_figheight(9)
+fig.set_figwidth(12)
+ax.set_yscale('log')
+ax.tick_params(labelrotation=12, labelsize=6)
+ax.set_xlabel('Job name')
+ax.set_ylabel('EOD processing time in seconds [s]')
+ax.set_xticklabels([d['name'] for d in durations], ha='right')  
+plt.show()
 
 loan_accounts = 2371124
 deposit_accounts = 6056048
@@ -73,7 +79,7 @@ processing_times = [duration['duration'].total_seconds() for duration in filtere
 account_numbers = [loan_accounts if 'LOANS' in name else deposit_accounts for name in job_names]
 avg_pt = [pt / na * 1000 for pt, na in zip(processing_times, account_numbers)]
 
-# Create figure 1
+# # Create figure 1
 fig, ax1 = plt.subplots(figsize=(16, 9))
 width_x = 0.35
 x = np.arange(len(job_names))  # X-axis positions for the groups
