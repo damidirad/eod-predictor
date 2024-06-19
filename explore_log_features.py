@@ -48,5 +48,5 @@ for path in paths:
     times.extend(t)
 
 df = pd.DataFrame({'time': times, 'id': ids, 'account': names, 'duration': durations})
-
-print(df.loc[df['account'] == 'onmo'])
+top_250 = df.sort_values('duration', ascending=False).head(250)
+top_250.to_csv('top_250')
