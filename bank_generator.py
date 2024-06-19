@@ -1,6 +1,7 @@
 import random
 import pandas as pd
 import numpy as np
+import time 
 
 class Product:
     def __init__(self, name, interest_rate, penalties_range, duration_range, is_revolving, repayment_schedule, interest_calc):
@@ -38,7 +39,7 @@ class Bank:
         revolving_loan_clients = sum(1 for client in self.clients if client.product.name == "Revolving Loan")
         other_clients = len(self.clients) - revolving_loan_clients
         # Higher weight for revolving loan clients
-        return revolving_loan_clients * 0.2 + other_clients * 0.05
+        return revolving_loan_clients * 0.02 + other_clients * 0.005
 
 class User:
     def __init__(self, name, bank, product):
@@ -47,6 +48,8 @@ class User:
         self.product = product
         self.penalties = product.generate_random_penalties()
         self.duration = product.generate_random_duration()
+
+start_time = time.time()
 
 # Define the products as shown in the image with variable features
 hypotheek_a = Product("Hypotheek A", 3.2, [0, 1], 360, 0, "maand", 12)
@@ -69,7 +72,7 @@ for bank in banks:
 
 # Generate a normally distributed number of clients for each bank
 num_clients_mean = 1500000
-num_clients_std = 500000
+num_clients_std = 200000
 
 for bank in banks:
     num_clients = max(1, int(np.random.normal(num_clients_mean, num_clients_std)))
@@ -94,4 +97,12 @@ for bank in banks:
         })
 
 df = pd.DataFrame(data)
-print(df)
+bank_eod_sum = df.groupby('Bank')['EOD Processing Time'].sum()
+
+# Timing complete process
+end_time = time.time()
+total_time = end_time - start_time
+print(f"Total processing time: {total_time} seconds")
+
+
+print(bank_eod_sum)
