@@ -1,7 +1,7 @@
 import random
 import pandas as pd
 import numpy as np
-import time 
+import time
 
 class Product:
     def __init__(self, name, interest_rate, penalties_range, duration_range, is_revolving, repayment_schedule, interest_calc):
@@ -33,30 +33,29 @@ class Bank:
     def generate_clients(self, num_clients):
         for _ in range(num_clients):
             product = random.choice(self.products)
-            self.clients.append(User(f"Client_{len(self.clients) + 1}", self, product))
-
-    def calculate_eod_processing_time(self):
-        revolving_loan_clients = sum(1 for client in self.clients if client.product.name == "Revolving Loan")
-        other_clients = len(self.clients) - revolving_loan_clients
-        # Higher weight for revolving loan clients
-        return revolving_loan_clients * 0.02 + other_clients * 0.005
+            if product.is_revolving:
+                eod_processing_time = random.uniform(0.3, 0.5)  
+            else:
+                eod_processing_time = random.uniform(0.05, 0.2)  
+            self.clients.append(User(f"Client_{len(self.clients) + 1}", self, product, eod_processing_time))
 
 class User:
-    def __init__(self, name, bank, product):
+    def __init__(self, name, bank, product, eod_processing_time):
         self.name = name
         self.bank = bank
         self.product = product
         self.penalties = product.generate_random_penalties()
         self.duration = product.generate_random_duration()
+        self.eod_processing_time = eod_processing_time
 
 start_time = time.time()
 
 # Define the products as shown in the image with variable features
-hypotheek_a = Product("Hypotheek A", 3.2, [0, 1], 360, 0, "maand", 12)
-hypotheek_b = Product("Hypotheek B", 4.7, [0, 1], 180, 0, "maand", 12)
-revolving_loan = Product("Revolving Loan", 20.1, [0, 1], (0, 100), 0, "Flexible", 365)
-persoonlijke_lening = Product("Persoonlijke Lening", 8, [0, 1], (0, 100), 0, "maand", 12)
-studie_lening = Product("Studie Lening", 5, [0, 1], (0, 120), 0, "maand", 12)
+hypotheek_a = Product("Mortgage A", 3.2, [0, 1], 360, 0, "month", 12)
+hypotheek_b = Product("Mortgage B", 4.7, [0, 1], 180, 0, "month", 12)
+revolving_loan = Product("Revolving Loan", 20.1, [0, 1], (0, 100), 1, "flexible", 365)
+persoonlijke_lening = Product("Personal Loan", 8, [0, 1], (0, 100), 0, "month", 12)
+studie_lening = Product("Student Loan", 5, [0, 1], (0, 120), 0, "month", 12)
 
 # Define the list of product types
 product_types = [hypotheek_a, hypotheek_b, revolving_loan, persoonlijke_lening, studie_lening]
@@ -71,17 +70,18 @@ for bank in banks:
         bank.add_product(product)
 
 # Generate a normally distributed number of clients for each bank
-num_clients_mean = 1500000
-num_clients_std = 200000
+num_clients_mean = 300000
+num_clients_std = 80000
 
 for bank in banks:
     num_clients = max(1, int(np.random.normal(num_clients_mean, num_clients_std)))
+    if random.random() < 0.03:  
+        num_clients = int(np.random.normal(num_clients_mean * 3, num_clients_std * 2))
     bank.generate_clients(num_clients)
 
 # Convert users data to pandas DataFrame
 data = []
 for bank in banks:
-    eod_processing_time = bank.calculate_eod_processing_time()
     for user in bank.clients:
         data.append({
             "User": user.name,
@@ -93,10 +93,11 @@ for bank in banks:
             "Is Revolving": user.product.is_revolving,
             "Repayment Schedule": user.product.repayment_schedule,
             "Interest Calculation": user.product.interest_calc,
-            "EOD Processing Time": eod_processing_time
+            "EOD Processing Time": user.eod_processing_time
         })
 
 df = pd.DataFrame(data)
+df.to_csv('out.csv')
 bank_eod_sum = df.groupby('Bank')['EOD Processing Time'].sum()
 
 # Timing complete process
@@ -105,4 +106,3 @@ total_time = end_time - start_time
 print(f"Total processing time: {total_time} seconds")
 
 
-print(bank_eod_sum)
