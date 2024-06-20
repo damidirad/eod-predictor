@@ -15,9 +15,6 @@ def validate_features(obj, feature, value, schema):
         if 'not_null' in constraints and value is None:
             raise ValueError(f"Feature '{feature}' cannot be null")
 
-        if 'default' in constraints and value is None:
-            value = constraints['default']
-
         setattr(obj, feature, value)
     else:
         raise AttributeError(f"Unknown feature '{feature}'")
@@ -36,7 +33,9 @@ class Product:
 class Account:
     feature_schema = account_schema
 
-    def __init__(self, **features):
+    def __init__(self, product, **features):
+        self.product = product
+
         for feature, (_, constraints) in Account.feature_schema.items():
             if 'default' in constraints:
                 setattr(self, feature, constraints['default'])
@@ -45,8 +44,9 @@ class Account:
             validate_features(self, feature, value, Account.feature_schema)
 
 class Bank:
-    def __init__(self, name):
+    def __init__(self, name, loan_processing_time=None):
         self.name = name
+        self.loan_processing_time = loan_processing_time
         self.products = []
         self.accounts = []
 
@@ -54,5 +54,8 @@ class Bank:
         self.products.append(product)
 
     def add_account(self, account):
-        self.accounts.append(account)
+        if account.product in self.products:
+            self.accounts.append(account)
+        else:
+            raise ValueError(f"Bank '{self.name}' has no product '{account.product.PRODUCTNAME}'")
 

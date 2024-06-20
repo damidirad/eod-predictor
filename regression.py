@@ -15,7 +15,7 @@ df['Repayment Schedule'] = df['Repayment Schedule'].cat.codes
 df = df.compute()
 
 
-X = df[['Interest Rate', 'Penalties', 'Product', 'Is Revolving', 'Duration', 'Repayment Schedule', 'Interest Calculation']]
+X = df[['Interest Rate', 'Penalties', 'Product', 'Is Revolving', 'Term', 'Repayment Schedule', 'Interest Calculation']]
 y = df['EOD Processing Time']
 
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
