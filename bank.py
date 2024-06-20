@@ -1,8 +1,3 @@
-import random
-import pandas as pd
-import numpy as np
-import time
-import re
 from feature_schema import product_schema, account_schema
 
 def validate_features(obj, feature, value, schema):
@@ -31,8 +26,23 @@ class Product:
     feature_schema = product_schema
 
     def __init__(self, **features):
+        for feature, (_, constraints) in Product.feature_schema.items():
+            if 'default' in constraints:
+                setattr(self, feature, constraints['default'])
+
         for feature, value in features.items():
             validate_features(self, feature, value, Product.feature_schema)
+
+class Account:
+    feature_schema = account_schema
+
+    def __init__(self, **features):
+        for feature, (_, constraints) in Account.feature_schema.items():
+            if 'default' in constraints:
+                setattr(self, feature, constraints['default'])
+
+        for feature, value in features.items():
+            validate_features(self, feature, value, Account.feature_schema)
 
 class Bank:
     def __init__(self, name):
@@ -46,9 +56,3 @@ class Bank:
     def add_account(self, account):
         self.accounts.append(account)
 
-class Account:
-    feature_schema = account_schema
-
-    def __init__(self, **features):
-        for feature, value in features.items():
-            validate_features(self, feature, value, Account.feature_schema)
