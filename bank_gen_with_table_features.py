@@ -4,6 +4,7 @@ import time
 import pandas as pd
 from featureWeights import weights
 
+# Auxiliary functions
 def generate_products(n):
     products = []
     for i in range(1, n+1):
@@ -34,12 +35,17 @@ def generate_accounts(n, product):
 
 start_time = time.time()
 
-banks = [Bank(f"Bank_{i + 1}") for i in range(10)]
+# Number of banks to be generated
+num_banks = 5
+banks = [Bank(f"Bank_{i + 1}") for i in range(num_banks)]
 
-product_types = generate_products(3)
+# Number of product types to be generated
+num_products = 8
+product_types = generate_products(8)
 data = []
 lp_data = []
 
+# GENERATION CODE DO NOT TOUCH
 for bank in banks:
     selected_products = random.sample(product_types, k=random.randint(3, len(product_types)))
     for product in selected_products:
@@ -80,4 +86,5 @@ for bank in banks:
 df = pd.DataFrame(data)
 df.to_csv('bank.csv', index=False)
 pd.DataFrame(lp_data).to_csv('processing_time.csv', index=False)
-print(f"Data generation completed in {time.time() - start_time} seconds")
+print(f"Data generation completed in {time.time() - start_time} seconds.\n"
+      "Please find the generated data in 'bank.csv' and 'processing_time.csv'.")
