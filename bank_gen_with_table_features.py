@@ -70,7 +70,8 @@ for bank in banks:
                 "LINEOFCREDITKEY": acc.LINEOFCREDITKEY,
                 "ACCRUEINTERESTAFTERMATURITY": acc.ACCRUEINTERESTAFTERMATURITY
             })
-    print(time.time() - start_time, f"{bank.name} generation complete with a processing time of {bank.loan_processing_time:i} milliseconds for {num_accs} accounts")
+    bank.loan_processing_time = int(bank.loan_processing_time)
+    print(time.time() - start_time, f"{bank.name} generation complete with a processing time of {bank.loan_processing_time} milliseconds for {num_accs} accounts")
 df = pd.DataFrame(data)
 df.to_csv('bank.csv')
 print(f"Data generation completed in {time.time() - start_time} seconds")
