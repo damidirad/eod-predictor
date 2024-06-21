@@ -36,7 +36,7 @@ def generate_accounts(n, product):
 start_time = time.time()
 
 # Number of banks to be generated
-num_banks = 5
+num_banks = 100
 banks = [Bank(f"Bank_{i + 1}") for i in range(num_banks)]
 
 # Number of product types to be generated
@@ -48,9 +48,11 @@ lp_data = []
 # GENERATION CODE DO NOT TOUCH
 for bank in banks:
     selected_products = random.sample(product_types, k=random.randint(3, len(product_types)))
+    total_accs = 0
     for product in selected_products:
         bank.add_product(product)
         num_accs = random.randint(40000, 150000)
+        total_accs += num_accs
         accs = generate_accounts(num_accs, product)
         for acc in accs:
             bank.add_account(acc)
@@ -80,9 +82,10 @@ for bank in banks:
     bank.loan_processing_time = int(bank.loan_processing_time)
     lp_data.append({
         'BANK': bank.name,
+        'NUMACCOUNTS': total_accs,
         "LOANPROCESSINGTIME": bank.loan_processing_time
     })
-    print(time.time() - start_time, f"{bank.name} generation complete with a processing time of {bank.loan_processing_time} milliseconds for {num_accs} accounts")
+    print(time.time() - start_time, f"{bank.name} generation complete with a processing time of {bank.loan_processing_time} milliseconds for {total_accs} accounts")
 df = pd.DataFrame(data)
 df.to_csv('bank.csv', index=False)
 pd.DataFrame(lp_data).to_csv('processing_time.csv', index=False)
