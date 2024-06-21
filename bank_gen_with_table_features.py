@@ -78,6 +78,6 @@ for bank in banks:
     })
     print(time.time() - start_time, f"{bank.name} generation complete with a processing time of {bank.loan_processing_time} milliseconds for {num_accs} accounts")
 df = pd.DataFrame(data)
-df.to_csv('bank.csv')
-pd.DataFrame(lp_data).to_csv('processing_time.csv')
+df.to_csv('bank.csv', index=False)
+pd.DataFrame(lp_data).to_csv('processing_time.csv', index=False)
 print(f"Data generation completed in {time.time() - start_time} seconds")
