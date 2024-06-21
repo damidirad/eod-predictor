@@ -44,7 +44,7 @@ class Account:
             validate_features(self, feature, value, Account.feature_schema)
 
 class Bank:
-    def __init__(self, name, loan_processing_time=None):
+    def __init__(self, name, loan_processing_time=0):
         self.name = name
         self.loan_processing_time = loan_processing_time
         self.products = []

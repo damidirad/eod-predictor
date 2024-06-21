@@ -2,6 +2,7 @@ from bank import *
 import random
 import time
 import pandas as pd
+from featureWeights import weights
 
 def generate_products(n):
     products = []
@@ -33,7 +34,7 @@ def generate_accounts(n, product):
 
 start_time = time.time()
 
-banks = [Bank(f"Bank_{i + 1}") for i in range(50)]
+banks = [Bank(f"Bank_{i + 1}") for i in range(3)]
 
 product_types = generate_products(10)
 data = []
@@ -45,6 +46,16 @@ for bank in banks:
         accs = generate_accounts(random.randint(40000, 150000), product)
         for acc in accs:
             bank.add_account(acc)
+            time_multiplier = (
+                    weights['ALLOWARBITRARYFEES'][product.ALLOWARBITRARYFEES] *
+                    weights['ACCOUNTLINKINGENABLED'][product.ACCOUNTLINKINGENABLED] *
+                    weights['SCHEDULEDUEDATESMETHOD'][product.SCHEDULEDUEDATESMETHOD] *
+                    weights['TAXESONPENALTYENABLED'][product.TAXESONPENALTYENABLED] *
+                    weights['INTERESTCALCULATIONMETHOD'][acc.INTERESTCALCULATIONMETHOD] *
+                    weights['HASCUSTOMSCHEDULE'][acc.HASCUSTOMSCHEDULE] *
+                    weights['ACCRUEINTERESTAFTERMATURITY'][acc.ACCRUEINTERESTAFTERMATURITY]
+                )
+            bank.loan_processing_time += 0.5 * time_multiplier
             data.append({
                 "BANK": bank.name,
                 "ACCOUNTHOLDERKEY": acc.ACCOUNTHOLDERKEY,
@@ -58,7 +69,7 @@ for bank in banks:
                 "LINEOFCREDITKEY": acc.LINEOFCREDITKEY,
                 "ACCRUEINTERESTAFTERMATURITY": acc.ACCRUEINTERESTAFTERMATURITY
             })
-    print(time.time(), bank.name)
+    print(time.time(), bank.name, bank.loan_processing_time)
 df = pd.DataFrame(data)
 df.to_csv('bank.csv')
 print(f"Data generation completed in {time.time() - start_time} seconds")
