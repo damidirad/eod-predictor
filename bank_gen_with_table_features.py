@@ -36,8 +36,9 @@ start_time = time.time()
 
 banks = [Bank(f"Bank_{i + 1}") for i in range(10)]
 
-product_types = generate_products(10)
+product_types = generate_products(3)
 data = []
+lp_data = []
 
 for bank in banks:
     selected_products = random.sample(product_types, k=random.randint(3, len(product_types)))
@@ -71,7 +72,12 @@ for bank in banks:
                 "ACCRUEINTERESTAFTERMATURITY": acc.ACCRUEINTERESTAFTERMATURITY
             })
     bank.loan_processing_time = int(bank.loan_processing_time)
+    lp_data.append({
+        'BANK': bank.name,
+        "LOANPROCESSINGTIME": bank.loan_processing_time
+    })
     print(time.time() - start_time, f"{bank.name} generation complete with a processing time of {bank.loan_processing_time} milliseconds for {num_accs} accounts")
 df = pd.DataFrame(data)
 df.to_csv('bank.csv')
+pd.DataFrame(lp_data).to_csv('processing_time.csv')
 print(f"Data generation completed in {time.time() - start_time} seconds")
