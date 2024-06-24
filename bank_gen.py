@@ -58,7 +58,7 @@ for bank in banks:
         if i == len(selected_products) - 1:
             num_accs = remaining_accounts  
         else:
-            num_accs = random.randint(int(remaining_accounts * 0.4), remaining_accounts)
+            num_accs = random.randint(int(remaining_accounts * 0.1), int(remaining_accounts * 0.4))
             remaining_accounts -= num_accs
 
         total_accs += num_accs
