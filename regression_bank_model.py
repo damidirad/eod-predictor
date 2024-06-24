@@ -14,12 +14,12 @@ start_time = time.time()
 
 # Load data
 df = pd.read_csv('bank.csv')
-bank_df = pd.read_csv('processing_time.csv')
-bank_data = df.merge(bank_df, on='BANK')
+bank_data = pd.read_csv('processing_time.csv')
+#bank_data = df.merge(bank_df, on='BANK')
 
 # Prepare data and column to predict
-X = bank_data.drop(columns=['BANK', 'ACCOUNTHOLDERKEY', 'LOANPROCESSINGTIME'])
-y = bank_data['LOANPROCESSINGTIME']
+X = bank_data.drop(columns=['BANK', 'ACCOUNTHOLDERKEY', 'ACCOUNTLOANPROCESSINGTIME'])
+y = bank_data['ACCOUNTLOANPROCESSINGTIME']
 
 # Create preprocessor
 categorical_features = ['SCHEDULEDUEDATESMETHOD', 'INTERESTCALCULATIONMETHOD', 'PRODUCTNAME']
@@ -39,12 +39,11 @@ model = Pipeline(steps=[('preprocessor', preprocessor),
                         ('regressor', XGBRegressor(random_state=42))])
 
 print(f"Model ready to be trained")
-# Train the model
 model.fit(X_train, y_train)
 print(f"Model successfully trained in {time.time() - start_time} seconds")
 
 # Save the trained model
-joblib.dump(model, "100_banks_8_products_xgboost.pkl")
+joblib.dump(model, "100_banks_8_products_xgboost_per_account.pkl")
 
 # Make predictions
 y_pred = model.predict(X_test)
