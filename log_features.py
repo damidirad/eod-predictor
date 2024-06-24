@@ -68,10 +68,10 @@ pick_3_top = df.sort_values('duration', ascending=False).head(5000).sample(3)
 print(pick_3_top)
 
 print(top_250.head(1))
-demo_accounts = df[df['account'].str.contains('demo', case=False, na=False)].drop_duplicates(['account'])
+demo_accounts = df[df['account'].str.contains('demo', case=False, na=False)]
 normal_accounts = df[~df['account'].str.contains('demo', case=False, na=False)].drop_duplicates(['account'])
 normal_accounts['account'].to_csv('normal_accounts', index=False)
-demo_accounts['account'].to_csv('demo_accounts', index=False)
+demo_accounts.sort_values(by=['duration'], ascending=False).to_csv('demo_accounts', index=False)
 normal_accounts_num = len(normal_accounts)
 demo_accounts_num = len(demo_accounts)
 demo_accounts_duration = df[df['account'].str.contains('demo', case=False, na=False)]['duration'].sum()

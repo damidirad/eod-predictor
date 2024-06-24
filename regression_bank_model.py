@@ -5,6 +5,7 @@ from sklearn.preprocessing import OneHotEncoder, StandardScaler
 from sklearn.compose import ColumnTransformer
 from sklearn.pipeline import Pipeline
 from xgboost import XGBRegressor
+import matplotlib.pyplot as plt
 import shap
 import time
 import joblib
@@ -13,8 +14,8 @@ import pandas as pd
 start_time = time.time()
 
 # Load data
-df = pd.read_csv('bank.csv')
-bank_data = pd.read_csv('processing_time.csv')
+bank_data = pd.read_csv('bank.csv')
+# bank_data = pd.read_csv('processing_time.csv')
 #bank_data = df.merge(bank_df, on='BANK')
 
 # Prepare data and column to predict
@@ -43,7 +44,7 @@ model.fit(X_train, y_train)
 print(f"Model successfully trained in {time.time() - start_time} seconds")
 
 # Save the trained model
-joblib.dump(model, "100_banks_8_products_xgboost_per_account.pkl")
+joblib.dump(model, "100_banks_8_products_xgboost_.pkl")
 
 # Make predictions
 y_pred = model.predict(X_test)
@@ -61,9 +62,18 @@ X_test_transformed = model.named_steps['preprocessor'].transform(X_test)
 explainer = shap.Explainer(model.named_steps['regressor'])
 shap_values = explainer(X_test_transformed)
 
-shap.summary_plot(shap_values, X_test_transformed, feature_names=model.named_steps['preprocessor'].get_feature_names_out())
+shap.summary_plot(shap_values, 
+                  X_test_transformed, 
+                  plot_size=[10,6], 
+                  feature_names=model.named_steps['preprocessor'].get_feature_names_out(), 
+                  show=False)
+plt.savefig("shap_summary_plot.png")
 
 # Feature importance plot
-shap.summary_plot(shap_values, X_test_transformed, feature_names=model.named_steps['preprocessor'].get_feature_names_out(), plot_type="bar")
+shap.summary_plot(shap_values, 
+                  X_test_transformed, 
+                  feature_names=model.named_steps['preprocessor'].get_feature_names_out(), 
+                  plot_type="bar")
+plt.savefig("shap_importance_plot.png")
 
 print(f"SHAP analysis succesful after {time.time() - start_time} seconds")

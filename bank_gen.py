@@ -74,7 +74,7 @@ for bank in banks:
                     weights['HASCUSTOMSCHEDULE'][acc.HASCUSTOMSCHEDULE] *
                     weights['ACCRUEINTERESTAFTERMATURITY'][acc.ACCRUEINTERESTAFTERMATURITY]
                 )
-            acc_time = 0.5 * time_multiplier
+            acc_time = random.uniform(0.45, 0.55) * time_multiplier
             bank.loan_processing_time += acc_time
             
             data.append({
