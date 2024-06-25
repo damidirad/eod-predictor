@@ -93,7 +93,3 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 ## Contact
 
 If you have any questions or suggestions, please feel free to contact us at danielamidirad@gmail.com
-
----
-
-This README provides a comprehensive overview of the project, from data generation to model training and SHAP analysis, along with instructions on how to run the project and understand its components.
