@@ -2,7 +2,7 @@
 
 ## Overview
 
-This project simulates the generation of banking products and accounts for a set of banks, calculates their loan processing times, and trains a machine learning model to predict these processing times based on various account and product features. It also includes SHAP analysis to understand feature importance.
+This project simulates the generation of banking products and accounts for a set of banks, calculates their loan processing times, and trains a machine learning model to predict these processing times based on various account and product features. It then includes SHAP analysis to understand feature importance.
 
 ## Contents
 ### data
