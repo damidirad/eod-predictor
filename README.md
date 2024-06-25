@@ -84,11 +84,11 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ## Authors
 
-- Daniel Amidirad 
-- Wim Berkelmans
-- Teun van der Maas
-- Popke Snoek
-- Lucas Woudstra
+- Daniel Amidirad - https://github.com/damidirad/
+- Wim Berkelmans - https://github.com/TCGWim
+- Teun van der Maas - https://github.com/TeunvdMaas
+- Popke Snoek - https://github.com/popkesnoek
+- Lucas Woudstra - https://github.com/LucasWoudstra
 
 ## Contact
 
