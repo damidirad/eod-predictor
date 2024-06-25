@@ -60,3 +60,21 @@ bottom_250 = df.sort_values('duration', ascending=True).head(250)
 bottom_250.to_csv('bottom_250')
 
 print(df[df['account'].str.contains('demo', case=False, na=False)]['duration'].sum())
+
+for name in ['sonae', 'camesa', 'onmo', 'ascendnano']:
+    tenant = df[df['account'] == name]
+    job_count = tenant.shape[0]
+    tenant['duration'] = tenant['duration'].apply(lambda x: x/3600000)
+    max_duration = tenant['duration'].max()
+    min_duration = tenant['duration'].min()
+    plot = tenant.plot(x='time', y='duration', kind='scatter',
+                       title=f"{job_count} EOD job run times for '{name}' during period of 8 days\n"
+                             f"maximum duration: {max_duration} --- minimum duration: {min_duration}")
+    plt.xticks([])
+    plot.set(xlabel='time period of 8 days')
+    plot.set(ylabel='duration of job in hours')
+    plot.set_title(f"{job_count} EOD job run times for '{name}' during period of 8 days \n "
+                             f"max. duration: {max_duration:.3f} hrs --- min. duration: {min_duration:.3f} hrs",
+                   wrap=True)
+    # plt.show()
+    plt.savefig(f'{name}_run_times.png')
