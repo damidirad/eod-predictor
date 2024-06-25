@@ -1,4 +1,4 @@
-from feature_schema import product_schema, account_schema
+from data.feature_schema import product_schema, account_schema
 
 # Validate whether feature is allowed according to database information
 def validate_feature(obj, feature, value, schema):
