@@ -37,7 +37,7 @@ def generate_accounts(n, product):
 start_time = time.time()
 
 # Bank generator
-def generate_banks(n_banks, n_products, acc_per_bank):
+def generate_banks(n_banks=100, n_products=8, n_acc_per_bank=500000):
     banks = [Bank(f"Bank_{i + 1}") for i in range(n_banks)]
     product_types = generate_products(n_products)
     account_data = []
@@ -101,7 +101,7 @@ def generate_banks(n_banks, n_products, acc_per_bank):
     return account_data, bank_data
 
 # Generate 100 banks, 8 products and 500000 accounts per bank
-account_data, bank_data = generate_banks(100, 8, 500000)
+account_data, bank_data = generate_banks()
 
 # Store generated data in dataframes to use in model
 df = pd.DataFrame(account_data)
