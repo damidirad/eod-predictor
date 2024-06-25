@@ -34,7 +34,7 @@ pip install pandas numpy scikit-learn xgboost shap matplotlib joblib
 1. Generate synthetic data:
 
 ```python
-python data_generation.py
+python bank_gen.py
 ```
 
 2. Train the model and perform SHAP analysis:
