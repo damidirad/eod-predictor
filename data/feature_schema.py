@@ -1,7 +1,8 @@
+# Product feature names and constraints
 product_schema = {
     'ID': (str, {'max_length': 32}),
     'ACTIVATED': (bool, {}),
-    'CREATIONDATE': (str, {}),  # For simplicity, we'll use str for datetime fields. Adjust as needed.
+    'CREATIONDATE': (str, {}), 
     'DEFAULTGRACEPERIOD': (int, {}),
     'DEFAULTLOANAMOUNT': (float, {}),
     'DEFAULTNUMINSTALLMENTS': (int, {}),
@@ -10,7 +11,7 @@ product_schema = {
     'INTERESTCALCULATIONMETHOD': (str, {'max_length': 256}),
     'INTERESTTYPE': (str, {'max_length': 255, 'default': 'SIMPLE_INTEREST'}),
     'REPAYMENTSCHEDULEMETHOD': (str, {'max_length': 256, 'not_null': True, 'default': 'FIXED'}),
-    'LASTMODIFIEDDATE': (str, {}),
+    'LASTMODIFIEDDATE': (str, {}), # str used to represent date
     'MAXGRACEPERIOD': (int, {}),
     'MAXLOANAMOUNT': (float, {}),
     'MAXNUMINSTALLMENTS': (int, {}),
@@ -20,7 +21,7 @@ product_schema = {
     'MINNUMINSTALLMENTS': (int, {}),
     'MINPENALTYRATE': (float, {}),
     'DEFAULTPENALTYRATE': (float, {}),
-    'PRODUCTDESCRIPTION': (str, {}),  # mediumtext
+    'PRODUCTDESCRIPTION': (str, {}),  
     'PRODUCTNAME': (str, {'max_length': 256}),
     'REPAYMENTPERIODUNIT': (str, {'max_length': 256}),
     'PREPAYMENTACCEPTANCE': (str, {'max_length': 256, 'default': 'ACCEPT_PREPAYMENTS'}),
@@ -35,7 +36,7 @@ product_schema = {
     'PRINCIPALPAIDINSTALLMENTSTATUS': (str, {'max_length': 255}),
     'DAYSINYEAR': (str, {'max_length': 256, 'default': 'DAYS_365'}),
     'SCHEDULEINTERESTDAYSCOUNTMETHOD': (str, {'max_length': 256}),
-    'REPAYMENTALLOCATIONORDER': (bytes, {}),  # mediumblob
+    'REPAYMENTALLOCATIONORDER': (bytes, {}),  
     'IDGENERATORTYPE': (str, {'max_length': 256, 'not_null': True, 'default': 'RANDOM_PATTERN'}),
     'IDPATTERN': (str, {'max_length': 256, 'not_null': True, 'default': '@@@@###'}),
     'ACCOUNTINGMETHOD': (str, {'max_length': 256, 'default': 'NONE'}),
@@ -43,10 +44,10 @@ product_schema = {
     'LINKABLESAVINGSPRODUCTKEY': (str, {'max_length': 32}),
     'AUTOLINKACCOUNTS': (bool, {'not_null': True, 'default': False}),
     'AUTOCREATELINKEDACCOUNTS': (bool, {'not_null': True, 'default': False}),
-    'REPAYMENTSCHEDULEEDITOPTIONS': (bytes, {}),  # mediumblob
+    'REPAYMENTSCHEDULEEDITOPTIONS': (bytes, {}),  
     'SCHEDULEDUEDATESMETHOD': (str, {'max_length': 256, 'not_null': True, 'default': 'INTERVAL'}),
     'PAYMENTMETHOD': (str, {'max_length': 256, 'not_null': True, 'default': 'HORIZONTAL'}),
-    'FIXEDDAYSOFMONTH': (bytes, {}),  # mediumblob
+    'FIXEDDAYSOFMONTH': (bytes, {}),  
     'SHORTMONTHHANDLINGMETHOD': (str, {'max_length': 256}),
     'TAXESONINTERESTENABLED': (bool, {'not_null': True, 'default': False}),
     'TAXSOURCEKEY': (str, {'max_length': 32}),
@@ -94,6 +95,7 @@ product_schema = {
     'FOUREYESPRINCIPLELOANAPPROVAL': (bool, {'not_null': True, 'default': False}),
 }
 
+# Account feature names and constraints
 account_schema = {
     'ENCODEDKEY': (str, {'max_length': 32, 'not_null': True}),
     'ACCOUNTHOLDERKEY': (str, {'max_length': 32, 'not_null': True}),
@@ -103,10 +105,10 @@ account_schema = {
     'RESCHEDULEDACCOUNTKEY': (str, {'max_length': 32}),
     'ASSIGNEDBRANCHKEY': (str, {'max_length': 32}),
     'ASSIGNEDUSERKEY': (str, {'max_length': 32}),
-    'CLOSEDDATE': (str, {}),  # Simplified as str for datetime
-    'LASTLOCKEDDATE': (str, {}),  # Simplified as str for datetime
-    'CREATIONDATE': (str, {}),  # Simplified as str for datetime
-    'APPROVEDDATE': (str, {}),  # Simplified as str for datetime
+    'CLOSEDDATE': (str, {}), 
+    'LASTLOCKEDDATE': (str, {}),
+    'CREATIONDATE': (str, {}), 
+    'APPROVEDDATE': (str, {}),  
     'FEESDUE': (float, {}),
     'FEESPAID': (float, {}),
     'GRACEPERIOD': (int, {'not_null': True}),
@@ -121,13 +123,13 @@ account_schema = {
     'INTERESTBALANCE': (float, {}),
     'INTERESTPAID': (float, {}),
     'INTERESTRATE': (float, {}),
-    'LASTMODIFIEDDATE': (str, {}),  # Simplified as str for datetime
-    'LASTSETTOARREARSDATE': (str, {}),  # Simplified as str for datetime
+    'LASTMODIFIEDDATE': (str, {}), 
+    'LASTSETTOARREARSDATE': (str, {}), 
     'LOANAMOUNT': (float, {}),
     'PERIODICPAYMENT': (float, {'not_null': True, 'default': 0.0}),
     'LOANGROUP_ENCODEDKEY_OID': (str, {'max_length': 32}),
     'LOANNAME': (str, {'max_length': 256}),
-    'NOTES': (str, {}),  # Simplified as str for mediumtext
+    'NOTES': (str, {}),  
     'PENALTYDUE': (float, {}),
     'PENALTYPAID': (float, {}),
     'PRINCIPALBALANCE': (float, {}),
@@ -139,32 +141,32 @@ account_schema = {
     'ACCOUNTS_INTEGER_IDX': (int, {}),
     'MIGRATIONEVENTKEY': (str, {'max_length': 32}),
     'ASSIGNEDCENTREKEY': (str, {'max_length': 32}),
-    'LASTACCOUNTAPPRAISALDATE': (str, {}),  # Simplified as str for datetime
+    'LASTACCOUNTAPPRAISALDATE': (str, {}), 
     'PRINCIPALREPAYMENTINTERVAL': (int, {'default': 1}),
     'PRINCIPALDUE': (float, {}),
     'INTERESTDUE': (float, {}),
-    'LASTINTERESTREVIEWDATE': (str, {}),  # Simplified as str for datetime
+    'LASTINTERESTREVIEWDATE': (str, {}), 
     'ACCRUELATEINTEREST': (bool, {'not_null': True, 'default': True}),
     'INTERESTSPREAD': (float, {}),
     'INTERESTRATESOURCE': (str, {'max_length': 256, 'not_null': True, 'default': 'FIXED_INTEREST_RATE'}),
     'INTERESTRATEREVIEWUNIT': (str, {'max_length': 256}),
     'INTERESTRATEREVIEWCOUNT': (int, {}),
     'ACCRUEDINTEREST': (float, {'default': 0.0}),
-    'LASTINTERESTAPPLIEDDATE': (str, {}),  # Simplified as str for datetime
+    'LASTINTERESTAPPLIEDDATE': (str, {}), 
     'FEESBALANCE': (float, {'default': 0.0}),
     'PENALTYBALANCE': (float, {'default': 0.0}),
     'SCHEDULEDUEDATESMETHOD': (str, {'max_length': 256, 'not_null': True, 'default': 'INTERVAL'}),
     'HASCUSTOMSCHEDULE': (bool, {'not_null': True, 'default': False}),
-    'FIXEDDAYSOFMONTH': (bytes, {}),  # Simplified as bytes for mediumblob
+    'FIXEDDAYSOFMONTH': (bytes, {}),  
     'SHORTMONTHHANDLINGMETHOD': (str, {'max_length': 256}),
     'TAXRATE': (float, {}),
-    'LASTTAXRATEREVIEWDATE': (str, {}),  # Simplified as str for datetime
+    'LASTTAXRATEREVIEWDATE': (str, {}), 
     'PENALTYRATE': (float, {}),
     'LOANPENALTYCALCULATIONMETHOD': (str, {'max_length': 256, 'default': 'NONE'}),
     'ACCRUEDPENALTY': (float, {'default': 0.0}),
     'ACTIVATIONTRANSACTIONKEY': (str, {'max_length': 32}),
     'LINEOFCREDITKEY': (str, {'max_length': 32}),
-    'LOCKEDOPERATIONS': (bytes, {}),  # Simplified as bytes for mediumblob
+    'LOCKEDOPERATIONS': (bytes, {}),  
     'INTERESTCOMMISSION': (float, {}),
     'DEFAULTFIRSTREPAYMENTDUEDATEOFFSET': (float, {}),
     'PRINCIPALPAYMENTSETTINGSKEY': (str, {'max_length': 32}),

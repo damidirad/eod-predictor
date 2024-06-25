@@ -1,4 +1,4 @@
-﻿
+﻿# Feature weights to multiply EOD loan processing time per account 
 weights = {
     'INTERESTCALCULATIONMETHOD': {'simple': 1, 'compound': 1.3, 'continuously compound': 13},
     'HASCUSTOMSCHEDULE': {False: 1, True: 1.3},
