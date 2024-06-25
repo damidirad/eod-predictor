@@ -1,8 +1,8 @@
-from ..data.bank import *
+from data.bank import Bank, Product, Account
 import random
 import time
 import pandas as pd
-from ..data.feature_weights import weights
+from data.feature_weights import weights
 
 # Product generator with four selected features for demonstration
 def generate_products(n):
@@ -47,7 +47,7 @@ def generate_banks(n_banks=100, n_products=8, n_acc_per_bank=500000):
         # Generate between 3 and n_products products for each bank
         selected_products = random.sample(product_types, k=random.randint(3, len(product_types)))
         total_accs = 0
-        remaining_accounts = acc_per_bank
+        remaining_accounts = n_acc_per_bank
     
         for i, product in enumerate(selected_products):
             bank.add_product(product)
