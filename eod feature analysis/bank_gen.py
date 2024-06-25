@@ -1,8 +1,8 @@
-from bank import *
+from data.bank import *
 import random
 import time
 import pandas as pd
-from featureWeights import weights
+from data.featureWeights import weights
 
 # Auxiliary functions
 def generate_products(n):
