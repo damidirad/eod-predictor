@@ -1,8 +1,8 @@
-from data.bank import *
+from ..data.bank import *
 import random
 import time
 import pandas as pd
-from data.feature_weights import weights
+from ..data.feature_weights import weights
 
 # Product generator with four selected features for demonstration
 def generate_products(n):
