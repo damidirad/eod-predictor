@@ -11,8 +11,6 @@ This project simulates the generation of banking products and accounts for a set
 ### eod feature analysis
 - `bank_gen.py`: Generates synthetic data for banks, products, and accounts.
 - `regression_bank_model.py`: Trains an XGBoost model to predict loan processing time, then performs SHAP analysis to interpret the trained model.
-- `bank.csv`: Contains generated data for banks, products, and accounts.
-- `processing_time.csv`: Contains generated loan processing time data.
 
 ## Getting Started
 
