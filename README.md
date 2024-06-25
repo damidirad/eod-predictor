@@ -72,10 +72,6 @@ python regression_bank_model.py
 
 The SHAP analysis reveals the importance of various features in predicting the loan processing time. The summary plot provides a visual representation of these feature importances.
 
-## License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
-
 ## Acknowledgments
 
 - This project uses the XGBoost library for training the machine learning model.
