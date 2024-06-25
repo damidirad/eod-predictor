@@ -50,7 +50,7 @@ python regression_bank_model.py
 
 - **generate_products(n)**: Generates `n` products with randomly assigned features.
 - **generate_accounts(n, product)**: Generates `n` accounts for a given product with randomly assigned features.
-- **main code**: Creates 100 banks, assigns products and accounts to each bank, and calculates the loan processing time based on feature weights. The generated data is saved in `account_data.csv` and `bank_data.csv`.
+- **generate_banks(n_banks, n_products, n_acc_per_bank)**: Creates 'n_banks' banks, generates and assigns products and accounts to each bank, and calculates the loan processing time based on feature weights. The generated data is saved in `account_data.csv` and `bank_data.csv`.
 
 #### Model Training
 
