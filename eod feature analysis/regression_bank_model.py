@@ -14,13 +14,13 @@ import pandas as pd
 start_time = time.time()
 
 # Load data
-bank_data = pd.read_csv('bank.csv')
-# bank_data = pd.read_csv('processing_time.csv')
-#bank_data = df.merge(bank_df, on='BANK')
+df = pd.read_csv('account_data.csv')
+# bank_df = pd.read_csv('bank_data.csv')
+# data = account_df.merge(bank_df, on='BANK')
 
 # Prepare data and column to predict
-X = bank_data.drop(columns=['BANK', 'ACCOUNTHOLDERKEY', 'ACCOUNTLOANPROCESSINGTIME'])
-y = bank_data['ACCOUNTLOANPROCESSINGTIME']
+X = df.drop(columns=['BANK', 'ACCOUNTHOLDERKEY', 'ACCOUNTLOANPROCESSINGTIME'])
+y = df['ACCOUNTLOANPROCESSINGTIME']
 
 # Create preprocessor
 categorical_features = ['SCHEDULEDUEDATESMETHOD', 'INTERESTCALCULATIONMETHOD', 'PRODUCTNAME']
@@ -68,12 +68,5 @@ shap.summary_plot(shap_values,
                   feature_names=model.named_steps['preprocessor'].get_feature_names_out(), 
                   show=False)
 plt.savefig("shap_summary_plot.png")
-
-# Feature importance plot
-shap.summary_plot(shap_values, 
-                  X_test_transformed, 
-                  feature_names=model.named_steps['preprocessor'].get_feature_names_out(), 
-                  plot_type="bar")
-plt.savefig("shap_importance_plot.png")
 
 print(f"SHAP analysis succesful after {time.time() - start_time} seconds")
