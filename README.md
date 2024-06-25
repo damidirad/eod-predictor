@@ -92,7 +92,7 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ## Contact
 
-If you have any questions or suggestions, please feel free to contact me at danielamidirad@gmail.com
+If you have any questions or suggestions, please feel free to contact us at danielamidirad@gmail.com
 
 ---
 
