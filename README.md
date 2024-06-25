@@ -7,7 +7,7 @@ This project simulates the generation of banking products and accounts for a set
 ## Contents
 ### data
 - `bank.py`: Defines the classes `Bank`, `Product`, and `Account`.
-- `featureWeights.py`: Contains a dictionary `weights` with weights for different features affecting loan processing time.
+- `feature_weights.py`: Contains a dictionary `weights` with weights for different features affecting loan processing time.
 ### eod feature analysis
 - `bank_gen.py`: Generates synthetic data for banks, products, and accounts.
 - `regression_bank_model.py`: Trains an XGBoost model to predict loan processing time, then performs SHAP analysis to interpret the trained model.
