@@ -43,10 +43,9 @@ python regression_bank_model.py
 ```
 
 ### Understanding the Code
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="final_architecture_dark.png">
-  <source media="(prefers-color-scheme: light)" srcset="final_architecture_light.png">
-</picture>
+![GitHub-Mark-Light](final_architecture_light.png)
+![GitHub-Mark-Dark](final_architecture_dark.png)
+
 #### Data Generation
 
 `bank_gen.py`:
