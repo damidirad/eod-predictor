@@ -43,9 +43,10 @@ python regression_bank_model.py
 ```
 
 ### Understanding the Code
-
-![Architecture of feature analysis pipeline](final_architecture.png)
-
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="final_architecture_dark.png">
+  <source media="(prefers-color-scheme: light)" srcset="final_architecture_light.png">
+</picture>
 #### Data Generation
 
 `bank_gen.py`:
