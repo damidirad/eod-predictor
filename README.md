@@ -44,6 +44,8 @@ python regression_bank_model.py
 
 ### Understanding the Code
 
+![Architecture of feature analysis pipeline](final_architecture.png)
+
 #### Data Generation
 
 `bank_gen.py`:
