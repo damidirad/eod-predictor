@@ -43,9 +43,12 @@ python regression_bank_model.py
 ```
 
 ### Understanding the Code
-![GitHub-Mark-Light](final_architecture_light.png)
-![GitHub-Mark-Dark](final_architecture_dark.png)
+![Light Theme](final_architecture_light.png)
+![Dark Theme](final_architecture_dark.png)
 
+<img src="final_architecture_light.png" alt="Architecture Diagram" style="display: block;" />
+
+<img src="final_architecture_dark.png" alt="Architecture Diagram" style="display: none;" />
 #### Data Generation
 
 `bank_gen.py`:
