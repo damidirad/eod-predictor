@@ -77,7 +77,7 @@ The SHAP analysis reveals the importance of various features in predicting the l
 
 - This project uses the XGBoost library for training the machine learning model.
 - The SHAP library is used for model interpretation and feature importance analysis.
-- This project was made possible by the great people at Mambu. Our sincerest thank you for the time, office space, and most of all the free lunches. 😊
+- This project was made possible by the great people at Mambu. Our sincerest thank you for the time, office space, and most of all, the free lunches. 😊
 
 ## Authors
 
